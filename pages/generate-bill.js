@@ -321,6 +321,24 @@ export default function GenerateBill() {
           ← Back to Dashboard
         </button>
         <h2 style={styles.pageTitle}>Generate New Bill</h2>
+        <div style={{ position: 'relative' }}>
+          <button onClick={handleShare} style={styles.shareBtn}>
+            📤 Share
+          </button>
+          {showShareMenu && (
+            <div style={styles.shareMenu}>
+              <button onClick={handleShareWhatsApp} style={styles.shareMenuItem}>
+                <span style={{marginRight: '8px'}}>💬</span> WhatsApp
+              </button>
+              <button onClick={handleDownloadBill} style={styles.shareMenuItem}>
+                <span style={{marginRight: '8px'}}>💾</span> Download
+              </button>
+              <button onClick={handleShareNative} style={styles.shareMenuItem}>
+                <span style={{marginRight: '8px'}}>📱</span> Share
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div id="generate-bill-container" className="bill-container" style={styles.billContainer}>
@@ -550,26 +568,31 @@ const styles = {
     backgroundColor: '#f5f5f5',
   },
   topBar: {
-    backgroundColor: 'white',
+    background: 'linear-gradient(135deg, #d32f2f 0%, #c62828 50%, #b71c1c 100%)',
     padding: '20px 40px',
-    borderBottom: '3px solid #d32f2f',
+    boxShadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
     display: 'flex',
     alignItems: 'center',
     gap: '20px',
   },
   backBtn: {
-    padding: '8px 16px',
-    backgroundColor: '#666',
+    padding: '10px 20px',
+    backgroundColor: 'rgba(255,255,255,0.2)',
     color: 'white',
-    border: 'none',
-    borderRadius: '5px',
+    border: '2px solid rgba(255,255,255,0.3)',
+    borderRadius: '25px',
     cursor: 'pointer',
     fontSize: '14px',
+    fontWeight: '600',
+    transition: 'all 0.3s ease',
   },
   pageTitle: {
     fontSize: '24px',
-    color: '#333',
+    color: '#ffffff',
     margin: 0,
+    fontWeight: '600',
+    letterSpacing: '0.5px',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
   },
   billContainer: {
     maxWidth: '210mm',
@@ -580,25 +603,45 @@ const styles = {
     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
   },
   header: {
-    border: '3px solid #d32f2f',
-    padding: '15px',
-    marginBottom: '15px',
+    background: 'linear-gradient(135deg, #d32f2f 0%, #c62828 50%, #b71c1c 100%)',
+    padding: '25px 20px',
+    marginBottom: '20px',
     textAlign: 'center',
+    borderRadius: '8px 8px 0 0',
+    boxShadow: '0 4px 6px rgba(211, 47, 47, 0.3)',
+    position: 'relative',
+    overflow: 'hidden',
   },
-  shopInfo: {},
+  shopInfo: {
+    position: 'relative',
+    zIndex: 1,
+  },
   shopName: {
-    fontSize: '32px',
-    color: '#d32f2f',
-    marginBottom: '5px',
-    fontWeight: 'bold',
+    fontSize: '36px',
+    color: '#ffffff',
+    marginBottom: '8px',
+    fontWeight: '700',
+    letterSpacing: '1px',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+    textTransform: 'uppercase',
   },
   address: {
-    fontSize: '14px',
-    marginBottom: '3px',
+    fontSize: '15px',
+    marginBottom: '5px',
+    color: '#ffebee',
+    fontWeight: '500',
+    letterSpacing: '0.5px',
   },
   mobile: {
-    fontSize: '14px',
-    fontWeight: 'bold',
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#ffffff',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    display: 'inline-block',
+    padding: '6px 20px',
+    borderRadius: '20px',
+    marginTop: '5px',
+    border: '2px solid rgba(255,255,255,0.3)',
   },
   billDetails: {
     border: '2px solid #d32f2f',
@@ -788,57 +831,65 @@ const styles = {
     flexWrap: 'wrap',
   },
   saveBtn: {
-    padding: '10px 20px',
+    padding: '12px 28px',
     backgroundColor: '#4CAF50',
     color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    fontSize: '14px',
-    fontWeight: 'bold',
+    border: '2px solid #4CAF50',
+    borderRadius: '25px',
+    fontSize: '15px',
+    fontWeight: '600',
     cursor: 'pointer',
+    boxShadow: '0 3px 6px rgba(76, 175, 80, 0.3)',
+    transition: 'all 0.3s ease',
   },
   shareBtn: {
-    padding: '10px 20px',
-    backgroundColor: '#25D366',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
+    padding: '10px 24px',
+    backgroundColor: '#ffffff',
+    color: '#d32f2f',
+    border: '2px solid #ffffff',
+    borderRadius: '25px',
     fontSize: '14px',
-    fontWeight: 'bold',
+    fontWeight: '600',
     cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    marginLeft: 'auto',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
   },
   printBtn: {
-    padding: '10px 20px',
+    padding: '12px 28px',
     backgroundColor: '#2196F3',
     color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    fontSize: '14px',
-    fontWeight: 'bold',
+    border: '2px solid #2196F3',
+    borderRadius: '25px',
+    fontSize: '15px',
+    fontWeight: '600',
     cursor: 'pointer',
+    boxShadow: '0 3px 6px rgba(33, 150, 243, 0.3)',
+    transition: 'all 0.3s ease',
   },
   clearBtn: {
-    padding: '10px 20px',
+    padding: '12px 28px',
     backgroundColor: '#ff9800',
     color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    fontSize: '14px',
-    fontWeight: 'bold',
+    border: '2px solid #ff9800',
+    borderRadius: '25px',
+    fontSize: '15px',
+    fontWeight: '600',
     cursor: 'pointer',
+    boxShadow: '0 3px 6px rgba(255, 152, 0, 0.3)',
+    transition: 'all 0.3s ease',
   },
   shareMenu: {
     position: 'absolute',
-    bottom: '100%',
-    left: 0,
-    marginBottom: '5px',
+    top: '100%',
+    right: 0,
+    marginTop: '8px',
     backgroundColor: 'white',
-    border: '2px solid #25D366',
-    borderRadius: '8px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-    zIndex: 1001,
-    minWidth: '180px',
-    overflow: 'hidden',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+    zIndex: 1000,
+    minWidth: '150px',
   },
   shareMenuItem: {
     width: '100%',
