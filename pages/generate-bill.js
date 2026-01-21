@@ -354,13 +354,71 @@ export default function GenerateBill() {
             border: 1px solid #000;
           }
         }
+        
+        @media (max-width: 768px) {
+          .generate-bill-topbar {
+            padding: 12px 20px !important;
+          }
+          .generate-bill-title {
+            font-size: 16px !important;
+          }
+          .generate-bill-back-btn {
+            padding: 6px 12px !important;
+            font-size: 13px !important;
+          }
+          
+          /* Bill Container Responsive Styles */
+          .bill-container {
+            margin: 10px auto !important;
+            padding: 12px !important;
+            border-width: 2px !important;
+          }
+          
+          /* Bill Header Responsive Styles */
+          .header {
+            padding: 12px 10px !important;
+            margin-bottom: 12px !important;
+            border-radius: 6px 6px 0 0 !important;
+          }
+          .header h1 {
+            font-size: 16px !important;
+            letter-spacing: 0.3px !important;
+            margin-bottom: 4px !important;
+            line-height: 1.3 !important;
+          }
+          .header p:first-of-type {
+            font-size: 11px !important;
+            margin-bottom: 3px !important;
+          }
+          .header p:last-of-type {
+            font-size: 11px !important;
+            padding: 4px 12px !important;
+            margin-top: 4px !important;
+          }
+          
+          /* Bill Details Responsive */
+          .bill-details {
+            padding: 10px !important;
+            margin-bottom: 12px !important;
+          }
+          
+          /* Labels and Inputs */
+          label {
+            font-size: 12px !important;
+          }
+          
+          input, select {
+            font-size: 13px !important;
+            padding: 6px 8px !important;
+          }
+        }
       `}</style>
 
-      <div className="no-print" style={styles.topBar}>
-        <button onClick={handleBack} style={styles.backBtn}>
+      <div className="no-print generate-bill-topbar" style={styles.topBar}>
+        <button onClick={handleBack} className="generate-bill-back-btn" style={styles.backBtn}>
           ← Back to Dashboard
         </button>
-        <h2 style={styles.pageTitle}>Generate New Bill</h2>
+        <h2 className="generate-bill-title" style={styles.pageTitle}>Generate New Bill</h2>
      
       </div>
 
@@ -591,31 +649,31 @@ const styles = {
     backgroundColor: '#f5f5f5',
   },
   topBar: {
-    background: 'linear-gradient(135deg, #d32f2f 0%, #c62828 50%, #b71c1c 100%)',
-    padding: '20px 40px',
-    boxShadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
+    backgroundColor: '#ffffff',
+    padding: '16px 40px',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
     display: 'flex',
     alignItems: 'center',
     gap: '20px',
+    borderBottom: '1px solid #f0f0f0',
   },
   backBtn: {
-    padding: '10px 20px',
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    color: 'white',
-    border: '2px solid rgba(255,255,255,0.3)',
-    borderRadius: '25px',
+    padding: '8px 16px',
+    backgroundColor: '#f5f5f5',
+    color: '#1a1a1a',
+    border: '1px solid #e0e0e0',
+    borderRadius: '8px',
     cursor: 'pointer',
     fontSize: '14px',
-    fontWeight: '600',
-    transition: 'all 0.3s ease',
+    fontWeight: '500',
+    transition: 'all 0.2s ease',
   },
   pageTitle: {
-    fontSize: '24px',
-    color: '#ffffff',
+    fontSize: '20px',
+    color: '#1a1a1a',
     margin: 0,
-    fontWeight: '600',
-    letterSpacing: '0.5px',
-    textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+    fontWeight: '700',
+    letterSpacing: '-0.3px',
   },
   billContainer: {
     maxWidth: '210mm',

@@ -34,21 +34,50 @@ export default function Dashboard() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.header}>
-        <h1 style={styles.title}>Prashant Event & Fireworks</h1>
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .dashboard-header {
+            padding: 12px 20px !important;
+          }
+          .dashboard-title {
+            font-size: 16px !important;
+          }
+          .user-name {
+            font-size: 13px !important;
+          }
+          .logout-btn {
+            padding: 8px 16px !important;
+            font-size: 13px !important;
+          }
+          .dashboard-content-title {
+            font-size: 22px !important;
+          }
+          
+          /* Card Styles Mobile */
+          .card-container {
+            gap: 15px !important;
+          }
+        }
+      `}</style>
+      
+      <div className="dashboard-header" style={styles.header}>
+        <div style={styles.logoSection}>
+          <div style={styles.logo}>🎆</div>
+          <h1 className="dashboard-title" style={styles.title}>Prashant Event & Fireworks</h1>
+        </div>
         <div style={styles.userInfo}>
-          <span style={styles.userName}>Welcome, {user.name}!</span>
-          <button onClick={handleLogout} style={styles.logoutBtn}>
+          <span className="user-name" style={styles.userName}>{user.name}</span>
+          <button onClick={handleLogout} className="logout-btn" style={styles.logoutBtn}>
             Logout
           </button>
         </div>
       </div>
 
       <div style={styles.content}>
-        <h2 style={styles.dashboardTitle}>Dashboard</h2>
+        <h2 className="dashboard-content-title" style={styles.dashboardTitle}>Dashboard</h2>
         <p style={styles.subtitle}>What would you like to do today?</p>
 
-        <div style={styles.cardContainer}>
+        <div className="card-container" style={styles.cardContainer}>
           <div style={styles.card} onClick={handleGenerateBill}>
             <div style={styles.icon}>📝</div>
             <h3 style={styles.cardTitle}>Generate Bill</h3>
@@ -76,95 +105,100 @@ const styles = {
     backgroundColor: '#f5f5f5',
   },
   header: {
-    background: 'linear-gradient(135deg, #d32f2f 0%, #c62828 50%, #b71c1c 100%)',
-    padding: '25px 40px',
-    boxShadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
+    backgroundColor: '#ffffff',
+    padding: '16px 40px',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: '20px',
+    borderBottom: '1px solid #f0f0f0',
+  },
+  logoSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  logo: {
+    fontSize: '28px',
   },
   title: {
-    fontSize: '32px',
+    fontSize: '20px',
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#1a1a1a',
     margin: 0,
-    letterSpacing: '1px',
-    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-    textTransform: 'uppercase',
+    letterSpacing: '-0.3px',
   },
   userInfo: {
     display: 'flex',
     alignItems: 'center',
-    gap: '20px',
+    gap: '16px',
   },
   userName: {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#ffffff',
-    backgroundColor: 'rgba(255,255,255,0.15)',
-    padding: '8px 16px',
-    borderRadius: '20px',
-    border: '2px solid rgba(255,255,255,0.3)',
+    fontSize: '14px',
+    fontWeight: '500',
+    color: '#6e6d7a',
   },
   logoutBtn: {
-    padding: '10px 24px',
-    backgroundColor: '#ffffff',
-    color: '#d32f2f',
-    border: '2px solid #ffffff',
-    borderRadius: '25px',
+    padding: '10px 20px',
+    backgroundColor: '#1a1a1a',
+    color: '#ffffff',
+    border: 'none',
+    borderRadius: '8px',
     cursor: 'pointer',
     fontSize: '14px',
-    fontWeight: '600',
+    fontWeight: '500',
+    transition: 'all 0.2s ease',
   },
   content: {
-    padding: '40px 20px',
+    padding: '30px 20px',
     maxWidth: '1200px',
     margin: '0 auto',
   },
   dashboardTitle: {
-    fontSize: '32px',
+    fontSize: '28px',
     color: '#333',
-    marginBottom: '10px',
+    marginBottom: '8px',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: '18px',
+    fontSize: '16px',
     color: '#666',
-    marginBottom: '40px',
+    marginBottom: '30px',
     textAlign: 'center',
   },
   cardContainer: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '30px',
-    maxWidth: '800px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '20px',
+    maxWidth: '600px',
     margin: '0 auto',
   },
   card: {
     backgroundColor: 'white',
-    padding: '40px',
+    padding: '24px',
     borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.08)',
     border: '2px solid #d32f2f',
     cursor: 'pointer',
     transition: 'transform 0.3s, box-shadow 0.3s',
     textAlign: 'center',
   },
   icon: {
-    fontSize: '60px',
-    marginBottom: '20px',
+    fontSize: '40px',
+    marginBottom: '12px',
   },
   cardTitle: {
-    fontSize: '24px',
+    fontSize: '18px',
     color: '#d32f2f',
-    marginBottom: '10px',
+    marginBottom: '8px',
     fontWeight: 'bold',
   },
   cardDescription: {
-    fontSize: '16px',
+    fontSize: '14px',
     color: '#666',
+    lineHeight: '1.4',
   },
   loading: {
     display: 'flex',

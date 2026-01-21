@@ -28,6 +28,23 @@ export default function Bills() {
     }
   }, [user]);
 
+  // Close share menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showShareMenu && !event.target.closest('.share-dropdown-menu') && !event.target.closest('button')) {
+        setShowShareMenu(false);
+      }
+    };
+
+    if (showShareMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showShareMenu]);
+
   const fetchBills = async (search = '') => {
     setLoading(true);
     try {
@@ -102,6 +119,7 @@ export default function Bills() {
   };
 
   const handleShareWhatsApp = async () => {
+    setShowShareMenu(false);
     if (selectedBill) {
       toast.loading('Generating bill image...', { id: 'share-loading' });
       const result = await shareViaWhatsApp('bill-view-container', selectedBill.billNumber);
@@ -112,11 +130,11 @@ export default function Bills() {
       } else {
         toast.error('Failed to generate bill image');
       }
-      setShowShareMenu(false);
     }
   };
 
   const handleShareNative = async () => {
+    setShowShareMenu(false);
     if (selectedBill) {
       toast.loading('Generating bill image...', { id: 'share-loading' });
       const result = await shareViaNativeShare('bill-view-container', selectedBill.billNumber);
@@ -127,11 +145,11 @@ export default function Bills() {
       } else if (result.message !== 'Share cancelled') {
         toast.error(result.message || 'Failed to share');
       }
-      setShowShareMenu(false);
     }
   };
 
   const handleDownloadBill = async () => {
+    setShowShareMenu(false);
     if (selectedBill) {
       toast.loading('Generating bill image...', { id: 'download-loading' });
       const result = await downloadBillImage('bill-view-container', selectedBill.billNumber);
@@ -142,7 +160,6 @@ export default function Bills() {
       } else {
         toast.error('Failed to download bill');
       }
-      setShowShareMenu(false);
     }
   };
 
@@ -162,13 +179,174 @@ export default function Bills() {
             border: 2px solid #000;
           }
         }
+        
+        @media (max-width: 768px) {
+          .bills-header {
+            padding: 12px 20px !important;
+          }
+          .bills-page-title {
+            font-size: 16px !important;
+          }
+          .bills-back-btn {
+            padding: 6px 12px !important;
+            font-size: 13px !important;
+          }
+          
+          /* Bill View Modal Container (Outer) */
+          .bill-view {
+            padding: 10px !important;
+          }
+          
+          /* Bill View Content (Inner) */
+          #bill-view-container {
+            padding: 10px !important;
+            border-width: 2px !important;
+            margin: 0 !important;
+          }
+          
+          /* Bill View Header Responsive Styles */
+          #bill-view-container > div:first-child {
+            padding: 12px 10px !important;
+            margin-bottom: 12px !important;
+          }
+          #bill-view-container h1 {
+            font-size: 16px !important;
+            letter-spacing: 0.3px !important;
+            margin: 0 0 4px 0 !important;
+            line-height: 1.3 !important;
+          }
+          #bill-view-container > div:first-child p {
+            font-size: 11px !important;
+            margin: 3px 0 !important;
+          }
+          #bill-view-container > div:first-child p:last-of-type {
+            padding: 4px 12px !important;
+            margin-top: 4px !important;
+          }
+          
+          /* Bill Info Section */
+          #bill-view-container > div:nth-child(2) {
+            padding: 10px !important;
+            margin-bottom: 12px !important;
+            font-size: 12px !important;
+            gap: 10px !important;
+          }
+          #bill-view-container > div:nth-child(2) > div {
+            min-width: 100% !important;
+          }
+          #bill-view-container > div:nth-child(2) p {
+            font-size: 12px !important;
+            margin: 4px 0 !important;
+          }
+          #bill-view-container > div:nth-child(2) strong {
+            font-size: 12px !important;
+          }
+          
+          /* Bill Table Wrapper */
+          .bill-table-wrapper {
+            margin-bottom: 12px !important;
+            border: 1px solid #d32f2f !important;
+            border-radius: 4px !important;
+          }
+          
+          /* Bill Table */
+          #bill-view-container table {
+            font-size: 10px !important;
+            margin-bottom: 0 !important;
+            border-width: 0 !important;
+            min-width: 500px !important;
+          }
+          #bill-view-container table th,
+          #bill-view-container table td {
+            padding: 6px 4px !important;
+            font-size: 10px !important;
+            border-width: 1px !important;
+            white-space: nowrap !important;
+          }
+          #bill-view-container table th:first-child,
+          #bill-view-container table td:first-child {
+            padding-left: 6px !important;
+          }
+          #bill-view-container table th:last-child,
+          #bill-view-container table td:last-child {
+            padding-right: 6px !important;
+          }
+          
+          /* Summary Section */
+          #bill-view-container > div:last-child {
+            padding: 10px !important;
+            margin-bottom: 12px !important;
+          }
+          #bill-view-container > div:last-child > div {
+            padding: 6px 0 !important;
+            font-size: 12px !important;
+          }
+          #bill-view-container > div:last-child strong {
+            font-size: 12px !important;
+          }
+          
+          /* Modal Container */
+          .bill-view {
+            padding: 10px !important;
+          }
+          
+          /* Modal Header */
+          .bill-view > .no-print {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            margin-bottom: 12px !important;
+            padding-bottom: 10px !important;
+            gap: 10px !important;
+            border-bottom-width: 2px !important;
+          }
+          
+          .bill-view > .no-print h2 {
+            font-size: 16px !important;
+            margin: 0 !important;
+          }
+          
+          /* Modal Action Buttons Container */
+          .bill-view > .no-print > div {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 6px !important;
+            width: 100% !important;
+          }
+          
+          /* Modal Action Buttons */
+          .bill-view > .no-print button {
+            padding: 8px 12px !important;
+            font-size: 11px !important;
+            border-radius: 6px !important;
+            white-space: nowrap !important;
+            flex: 1 1 auto !important;
+            min-width: fit-content !important;
+          }
+          
+          /* Share Menu Mobile Styles */
+          .share-dropdown-menu {
+            position: fixed !important;
+            bottom: 20px !important;
+            left: 10px !important;
+            right: 10px !important;
+            top: auto !important;
+            transform: none !important;
+            width: auto !important;
+            max-width: none !important;
+          }
+          
+          .share-dropdown-menu button {
+            font-size: 13px !important;
+            padding: 14px 16px !important;
+          }
+        }
       `}</style>
 
-      <div className="no-print" style={styles.header}>
-        <button onClick={handleBack} style={styles.backBtn}>
+      <div className="no-print bills-header" style={styles.header}>
+        <button onClick={handleBack} className="bills-back-btn" style={styles.backBtn}>
           ← Back to Dashboard
         </button>
-        <h2 style={styles.pageTitle}>All Bills</h2>
+        <h2 className="bills-page-title" style={styles.pageTitle}>All Bills</h2>
       </div>
 
       <div className="no-print" style={styles.content}>
@@ -259,17 +437,44 @@ export default function Bills() {
                    📤 Share
                  </button>
                  {showShareMenu && (
-                   <div style={styles.shareMenu}>
-                     <button onClick={handleShareWhatsApp} style={styles.shareMenuItem}>
-                       <span style={{marginRight: '8px'}}>💬</span> WhatsApp
-                     </button>
-                     <button onClick={handleDownloadBill} style={styles.shareMenuItem}>
-                       <span style={{marginRight: '8px'}}>💾</span> Download
-                     </button>
-                     <button onClick={handleShareNative} style={styles.shareMenuItem}>
-                       <span style={{marginRight: '8px'}}>📱</span> Share
-                     </button>
-                   </div>
+                   <>
+                     {window.innerWidth <= 768 && (
+                       <div 
+                         onClick={() => setShowShareMenu(false)}
+                         className="share-backdrop"
+                         style={{
+                           position: 'fixed',
+                           top: 0,
+                           left: 0,
+                           right: 0,
+                           bottom: 0,
+                           backgroundColor: 'rgba(0,0,0,0.5)',
+                           zIndex: 9999,
+                         }}
+                       />
+                     )}
+                     <div className="share-dropdown-menu" style={{
+                       ...styles.shareMenu,
+                       position: window.innerWidth <= 768 ? 'fixed' : 'absolute',
+                       top: window.innerWidth <= 768 ? 'auto' : '100%',
+                       bottom: window.innerWidth <= 768 ? '20px' : 'auto',
+                       left: window.innerWidth <= 768 ? '10px' : 'auto',
+                       right: window.innerWidth <= 768 ? '10px' : '0',
+                       transform: 'none',
+                       maxWidth: window.innerWidth <= 768 ? 'calc(100vw - 20px)' : 'auto',
+                       width: window.innerWidth <= 768 ? 'calc(100vw - 20px)' : 'auto',
+                     }}>
+                       <button onClick={handleShareWhatsApp} style={styles.shareMenuItem}>
+                         <span style={{marginRight: '8px'}}>💬</span> WhatsApp
+                       </button>
+                       <button onClick={handleDownloadBill} style={styles.shareMenuItem}>
+                         <span style={{marginRight: '8px'}}>💾</span> Download
+                       </button>
+                       <button onClick={handleShareNative} style={styles.shareMenuItem}>
+                         <span style={{marginRight: '8px'}}>📱</span> Share
+                       </button>
+                     </div>
+                   </>
                  )}
                </div>
                <button onClick={handlePrintBill} style={styles.printModalBtn}>
@@ -304,6 +509,7 @@ export default function Bills() {
             </div>
 
             {/* Items Table */}
+            <div className="bill-table-wrapper" style={{overflowX: 'auto', WebkitOverflowScrolling: 'touch'}}>
             <table style={styles.billViewTable}>
               <thead>
                 <tr>
@@ -328,6 +534,7 @@ export default function Bills() {
                  ))}
               </tbody>
             </table>
+            </div>
 
              {/* Summary */}
              <div style={styles.billViewSummary}>
@@ -376,31 +583,31 @@ const styles = {
     backgroundColor: '#f5f5f5',
   },
   header: {
-    background: 'linear-gradient(135deg, #d32f2f 0%, #c62828 50%, #b71c1c 100%)',
-    padding: '20px 40px',
-    boxShadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
+    backgroundColor: '#ffffff',
+    padding: '16px 40px',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
     display: 'flex',
     alignItems: 'center',
     gap: '20px',
+    borderBottom: '1px solid #f0f0f0',
   },
   backBtn: {
-    padding: '10px 20px',
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    color: 'white',
-    border: '2px solid rgba(255,255,255,0.3)',
-    borderRadius: '25px',
+    padding: '8px 16px',
+    backgroundColor: '#f5f5f5',
+    color: '#1a1a1a',
+    border: '1px solid #e0e0e0',
+    borderRadius: '8px',
     cursor: 'pointer',
     fontSize: '14px',
-    fontWeight: '600',
-    transition: 'all 0.3s ease',
+    fontWeight: '500',
+    transition: 'all 0.2s ease',
   },
   pageTitle: {
-    fontSize: '24px',
-    color: '#ffffff',
+    fontSize: '20px',
+    color: '#1a1a1a',
     margin: 0,
-    fontWeight: '600',
-    letterSpacing: '0.5px',
-    textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+    fontWeight: '700',
+    letterSpacing: '-0.3px',
   },
   content: {
     padding: '40px 20px',
@@ -550,6 +757,7 @@ const styles = {
   modalActions: {
     display: 'flex',
     gap: '10px',
+    position: 'relative',
   },
   shareModalBtn: {
     padding: '10px 24px',
@@ -591,12 +799,12 @@ const styles = {
     position: 'absolute',
     top: '100%',
     right: 0,
-    marginTop: '5px',
+    marginTop: '8px',
     backgroundColor: 'white',
     border: '2px solid #4CAF50',
     borderRadius: '8px',
     boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-    zIndex: 1001,
+    zIndex: 10000,
     minWidth: '180px',
     overflow: 'hidden',
   },

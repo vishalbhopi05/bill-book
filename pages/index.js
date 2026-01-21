@@ -61,9 +61,24 @@ export default function Login() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.loginBox}>
-        <h1 style={styles.title}>Prashant Event & Fireworks</h1>
-        <h2 style={styles.subtitle}>Bill Management System</h2>
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .login-title {
+            font-size: 22px !important;
+          }
+          .login-subtitle {
+            font-size: 14px !important;
+          }
+          .login-box {
+            padding: 30px 20px !important;
+            margin: 20px !important;
+          }
+        }
+      `}</style>
+      
+      <div className="login-box" style={styles.loginBox}>
+        <h1 className="login-title" style={styles.title}>Prashant Event & Fireworks</h1>
+        <h2 className="login-subtitle" style={styles.subtitle}>Bill Management System</h2>
 
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.formGroup}>
