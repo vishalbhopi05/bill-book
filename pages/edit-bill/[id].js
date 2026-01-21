@@ -354,7 +354,7 @@ export default function EditBill() {
           }
           
           input, select {
-            font-size: 13px !important;
+            font-size: 16px !important;
             padding: 6px 8px !important;
           }
         }
@@ -777,7 +777,7 @@ const styles = {
     padding: '5px',
     border: 'none',
     borderBottom: '1px solid #333',
-    fontSize: '14px',
+    fontSize: '16px',
     outline: 'none',
   },
   inputSmall: {
@@ -785,7 +785,7 @@ const styles = {
     padding: '3px',
     border: 'none',
     borderBottom: '1px solid #333',
-    fontSize: '14px',
+    fontSize: '16px',
     outline: 'none',
   },
   itemsSection: {
@@ -825,14 +825,14 @@ const styles = {
     width: '100%',
     padding: '5px',
     border: '1px solid #ccc',
-    fontSize: '14px',
+    fontSize: '16px',
     cursor: 'pointer',
   },
   tableInputNumber: {
     width: '100%',
     padding: '5px',
     border: '1px solid #ccc',
-    fontSize: '14px',
+    fontSize: '16px',
     textAlign: 'center',
   },
   tableInputReadonly: {
@@ -840,7 +840,7 @@ const styles = {
     padding: '5px',
     backgroundColor: '#f9f9f9',
     border: 'none',
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 'bold',
     textAlign: 'center',
   },

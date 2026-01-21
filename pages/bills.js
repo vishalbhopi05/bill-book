@@ -626,7 +626,7 @@ const styles = {
     padding: '12px',
     border: '2px solid #ddd',
     borderRadius: '5px',
-    fontSize: '14px',
+    fontSize: '16px',
   },
   searchBtn: {
     padding: '12px 24px',
