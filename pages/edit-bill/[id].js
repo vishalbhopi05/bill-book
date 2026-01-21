@@ -256,6 +256,47 @@ export default function EditBill() {
 
   return (
     <div style={styles.pageContainer}>
+      <style jsx global>{`
+        .items-table-container {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: thin;
+          scrollbar-color: linear-gradient(135deg, #d32f2f, #b71c1c) #f0f0f0;
+          position: relative;
+        }
+        
+        .items-table-container::-webkit-scrollbar {
+          height: 12px;
+        }
+        
+        .items-table-container::-webkit-scrollbar-track {
+          background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+          border-radius: 10px;
+          box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+          margin: 0 4px;
+        }
+        
+        .items-table-container::-webkit-scrollbar-thumb {
+          background: linear-gradient(135deg, #d32f2f 0%, #c62828 50%, #b71c1c 100%);
+          border-radius: 10px;
+          border: 2px solid #f8f8f8;
+          box-shadow: 0 2px 6px rgba(211, 47, 47, 0.4);
+          transition: all 0.3s ease;
+        }
+        
+        .items-table-container::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(135deg, #c62828 0%, #b71c1c 50%, #a71515 100%);
+          box-shadow: 0 3px 8px rgba(211, 47, 47, 0.6);
+          border-color: #ffffff;
+          transform: scaleY(1.1);
+        }
+        
+        .items-table-container::-webkit-scrollbar-thumb:active {
+          background: linear-gradient(135deg, #b71c1c 0%, #a71515 50%, #941212 100%);
+          box-shadow: 0 1px 4px rgba(211, 47, 47, 0.8);
+        }
+      `}</style>
+
       <div className="no-print" style={styles.topBar}>
         <button onClick={handleCancel} style={styles.backBtn}>
           ← Back to Bills
@@ -339,16 +380,16 @@ export default function EditBill() {
         </div>
 
         {/* Items Table */}
-        <div style={styles.itemsSection}>
+        <div className="items-table-container" style={styles.itemsSection}>
           <table className="items-table" style={styles.table}>
             <thead>
               <tr>
-                <th style={styles.th}>Sr No.</th>
-                <th style={styles.th}>Item Name</th>
-                <th style={styles.th}>Quantity</th>
-                <th style={styles.th}>Rate</th>
-                <th style={styles.th}>Amount</th>
-                <th className="no-print" style={styles.th}>Action</th>
+                <th style={{...styles.th, width: '60px'}}>Sr No.</th>
+                <th style={{...styles.th, width: '280px', minWidth: '280px'}}>Item Name</th>
+                <th style={{...styles.th, width: '100px'}}>Quantity</th>
+                <th style={{...styles.th, width: '100px'}}>Rate</th>
+                <th style={{...styles.th, width: '120px'}}>Amount</th>
+                <th className="no-print" style={{...styles.th, width: '100px'}}>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -688,11 +729,14 @@ const styles = {
   itemsSection: {
     marginBottom: '15px',
     overflowX: 'auto',
+    WebkitOverflowScrolling: 'touch',
   },
   table: {
     width: '100%',
+    minWidth: '800px',
     borderCollapse: 'collapse',
     border: '2px solid #d32f2f',
+    tableLayout: 'fixed',
   },
   th: {
     backgroundColor: '#fff',
