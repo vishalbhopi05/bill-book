@@ -13,11 +13,107 @@ export const captureBillAsImage = async (elementId) => {
     const noPrintElements = element.querySelectorAll('.no-print');
     noPrintElements.forEach(el => el.style.display = 'none');
 
+    // Find all scrollable containers and tables
+    const scrollableContainers = element.querySelectorAll('.items-table-container, .bill-table-wrapper, [style*="overflow"]');
+    const tables = element.querySelectorAll('table');
+    
+    // Store original styles
+    const originalStyles = [];
+    const originalTableStyles = [];
+    const originalElementStyle = {
+      width: element.style.width,
+      maxWidth: element.style.maxWidth,
+      overflow: element.style.overflow,
+    };
+    
+    // Ensure main element doesn't clip content
+    element.style.width = 'auto';
+    element.style.maxWidth = 'none';
+    element.style.overflow = 'visible';
+    
+    // Remove overflow and scrolling from containers
+    scrollableContainers.forEach((container, index) => {
+      originalStyles[index] = {
+        overflow: container.style.overflow,
+        overflowX: container.style.overflowX,
+        overflowY: container.style.overflowY,
+        width: container.style.width,
+        maxWidth: container.style.maxWidth,
+      };
+      container.style.overflow = 'visible';
+      container.style.overflowX = 'visible';
+      container.style.overflowY = 'visible';
+      container.style.width = 'auto';
+      container.style.maxWidth = 'none';
+    });
+    
+    // Ensure tables are full width
+    tables.forEach((table, index) => {
+      originalTableStyles[index] = {
+        minWidth: table.style.minWidth,
+        width: table.style.width,
+        tableLayout: table.style.tableLayout,
+      };
+      table.style.minWidth = 'auto';
+      table.style.width = '100%';
+      table.style.tableLayout = 'auto';
+    });
+
+    // Calculate the full width needed with extra buffer for padding/borders
+    const tableWidths = Array.from(tables).map(t => {
+      // Get computed style to include padding and borders
+      const computedStyle = window.getComputedStyle(t);
+      const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+      const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+      const borderLeft = parseFloat(computedStyle.borderLeftWidth) || 0;
+      const borderRight = parseFloat(computedStyle.borderRightWidth) || 0;
+      return t.scrollWidth + paddingLeft + paddingRight + borderLeft + borderRight;
+    });
+    
+    const fullWidth = Math.max(
+      element.scrollWidth,
+      element.offsetWidth,
+      ...tableWidths
+    ) + 40; // Add 40px buffer for margins and potential clipping
+
+    // Wait a moment for DOM to settle after style changes
+    await new Promise(resolve => setTimeout(resolve, 150));
+
     const canvas = await html2canvas(element, {
       scale: 2,
       backgroundColor: '#ffffff',
       logging: false,
       useCORS: true,
+      allowTaint: true,
+      width: fullWidth,
+      windowWidth: fullWidth,
+      scrollX: 0,
+      scrollY: -window.scrollY,
+      x: 0,
+      y: 0,
+    });
+
+    // Restore original styles
+    element.style.width = originalElementStyle.width;
+    element.style.maxWidth = originalElementStyle.maxWidth;
+    element.style.overflow = originalElementStyle.overflow;
+    
+    scrollableContainers.forEach((container, index) => {
+      if (originalStyles[index]) {
+        container.style.overflow = originalStyles[index].overflow;
+        container.style.overflowX = originalStyles[index].overflowX;
+        container.style.overflowY = originalStyles[index].overflowY;
+        container.style.width = originalStyles[index].width;
+        container.style.maxWidth = originalStyles[index].maxWidth;
+      }
+    });
+    
+    tables.forEach((table, index) => {
+      if (originalTableStyles[index]) {
+        table.style.minWidth = originalTableStyles[index].minWidth;
+        table.style.width = originalTableStyles[index].width;
+        table.style.tableLayout = originalTableStyles[index].tableLayout;
+      }
     });
 
     // Show no-print elements again

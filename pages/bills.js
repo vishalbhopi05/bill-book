@@ -884,13 +884,13 @@ const styles = {
   billViewTh: {
     backgroundColor: '#fff',
     border: '2px solid #d32f2f',
-    padding: '10px',
+    padding: '8px 5px',
     textAlign: 'center',
     fontWeight: 'bold',
   },
   billViewTd: {
     border: '2px solid #d32f2f',
-    padding: '10px',
+    padding: '8px 5px',
     textAlign: 'center',
   },
   billViewSummary: {

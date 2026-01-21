@@ -484,11 +484,11 @@ export default function GenerateBill() {
           <table className="items-table" style={styles.table}>
             <thead>
               <tr>
-                <th style={{...styles.th, width: '60px'}}>Sr No.</th>
-                <th style={{...styles.th, width: '280px', minWidth: '280px'}}>Item Name</th>
-                <th style={{...styles.th, width: '100px'}}>Quantity</th>
-                <th style={{...styles.th, width: '100px'}}>Rate</th>
-                <th style={{...styles.th, width: '120px'}}>Amount</th>
+                <th style={{...styles.th, width: '50px'}}>Sr No.</th>
+                <th style={{...styles.th, width: '260px', minWidth: '260px'}}>Item Name</th>
+                <th style={{...styles.th, width: '90px'}}>Quantity</th>
+                <th style={{...styles.th, width: '100px'}}>Rate (₹)</th>
+                <th style={{...styles.th, width: '110px'}}>Amount (₹)</th>
                 <th className="no-print" style={{...styles.th, width: '100px'}}>Action</th>
               </tr>
             </thead>
@@ -798,14 +798,14 @@ const styles = {
   th: {
     backgroundColor: '#fff',
     border: '2px solid #d32f2f',
-    padding: '8px',
+    padding: '6px 4px',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: '14px',
   },
   td: {
     border: '2px solid #d32f2f',
-    padding: '5px',
+    padding: '4px 3px',
     textAlign: 'center',
     verticalAlign: 'middle',
   },
